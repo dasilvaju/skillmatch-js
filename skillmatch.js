@@ -94,6 +94,18 @@ for (const vaga of vagas) {
   console.log("--------------------");
 }
 
+const vagasAltaCompatibilidade = resultadosVagas.filter((vaga) => {
+  return vaga.compatibilidade >= 80;
+});
+
+console.log("Vagas com alta compatibilidade:", vagasAltaCompatibilidade);
+
+const titulosVagas = resultadosVagas.map((vaga) => {
+  return vaga.titulo;
+});
+
+console.log("Vagas analisadas:", titulosVagas);
+
 console.log(resultadosVagas);
 
 const melhorVaga = resultadosVagas.reduce((acumulador, atual) => {
