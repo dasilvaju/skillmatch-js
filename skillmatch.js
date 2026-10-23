@@ -57,6 +57,18 @@ const vagas = [
   ]),
 ];
 
+function carregarVagas() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (vagas.length > 0) {
+        resolve(vagas);
+      } else {
+        reject(new Error("Nenhuma vaga disponível."));
+      }
+    }, 1000);
+  });
+}
+
 const candidatos = [
   {
     nome: "Juliana",
@@ -66,9 +78,15 @@ const candidatos = [
   },
 ];
 
+async function iniciarPrograma() {
+  try {
+    const vagasCarregadas = await carregarVagas();
+
+    console.log("Vagas carregadas com sucesso!");
+
 const resultadosVagas = [];
 
-for (const vaga of vagas) {
+for (const vaga of vagasCarregadas) {
   const resultado = vaga.compararHabilidades(candidatos[0].habilidades);
 
   const compatibilidade =
@@ -128,6 +146,11 @@ for (const habilidade of melhorVaga.faltantes) {
   console.log("Estudar:", habilidade);
 }
 
+  } catch (erro) {
+    console.error("Erro ao carregar as vagas:", erro.message);
+  }
+}
+
 function classificarCompatibilidade(compatibilidade) {
   if (compatibilidade >= 80) {
     return "Alta";
@@ -137,3 +160,5 @@ function classificarCompatibilidade(compatibilidade) {
     return "Baixa";
   }
 }
+
+iniciarPrograma();
