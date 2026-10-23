@@ -45,6 +45,8 @@ function compararHabilidades(habilidadesCandidatos, habilidadesVagas) {
   };
 }
 
+const resultadosVagas = [];
+
 for (const vaga of vagas) {
   const resultado = compararHabilidades(
     candidatos[0].habilidades,
@@ -52,17 +54,25 @@ for (const vaga of vagas) {
   );
 
   const compatibilidade =
-  (resultado.atendidas.length / vaga.habilidades.length) * 100;
+    (resultado.atendidas.length / vaga.habilidades.length) * 100;
 
   let classificacao;
 
   if (compatibilidade >= 80) {
-    classificacao ="Alta";
-  } else if (compatibilidade >=50) {
+    classificacao = "Alta";
+  } else if (compatibilidade >= 50) {
     classificacao = "Média";
   } else {
-    classificacao = "Baixa"
+    classificacao = "Baixa";
   }
+
+  resultadosVagas.push({
+    titulo: vaga.titulo,
+    empresa: vaga.empresa,
+    faltantes: resultado.faltantes,
+    compatibilidade: compatibilidade,
+    classificacao: classificacao,
+  });
 
   console.log(vaga.titulo);
   console.log("Classificação:", classificacao);
@@ -71,3 +81,33 @@ for (const vaga of vagas) {
   console.log("Compatibilidade:", compatibilidade.toFixed(2) + "%");
   console.log("--------------------");
 }
+
+console.log(resultadosVagas);
+
+const melhorVaga = resultadosVagas.reduce((acumulador, atual) => {
+  if (atual.faltantes.length < acumulador.faltantes.length) {
+    return atual;
+  } else {
+    return acumulador;
+  }
+});
+
+console.log("Vaga prioritária para estudo:", melhorVaga.titulo);
+console.log("Habilidades faltantes:", melhorVaga.faltantes);
+console.log("Recomendações de estudo:");
+
+for (const habilidade of melhorVaga.faltantes) {
+  console.log("Estudar:", habilidade);
+}
+
+function classificarCompatibilidade(compatibilidade) {
+  if (compatibilidade >= 80) {
+    return "Alta";
+  } else if (compatibilidade >= 50) {
+    return "Média";
+  } else {
+    return "Baixa";
+  }
+}
+
+console.log(classificarCompatibilidade(49));
