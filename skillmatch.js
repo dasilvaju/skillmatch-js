@@ -56,15 +56,7 @@ for (const vaga of vagas) {
   const compatibilidade =
     (resultado.atendidas.length / vaga.habilidades.length) * 100;
 
-  let classificacao;
-
-  if (compatibilidade >= 80) {
-    classificacao = "Alta";
-  } else if (compatibilidade >= 50) {
-    classificacao = "Média";
-  } else {
-    classificacao = "Baixa";
-  }
+  const classificacao = classificarCompatibilidade(compatibilidade);
 
   resultadosVagas.push({
     titulo: vaga.titulo,
@@ -85,7 +77,11 @@ for (const vaga of vagas) {
 console.log(resultadosVagas);
 
 const melhorVaga = resultadosVagas.reduce((acumulador, atual) => {
-  if (atual.faltantes.length < acumulador.faltantes.length) {
+  if (
+    atual.compatibilidade > acumulador.compatibilidade ||
+    (atual.compatibilidade === acumulador.compatibilidade &&
+      atual.faltantes.length < acumulador.faltantes.length)
+  ) {
     return atual;
   } else {
     return acumulador;
@@ -109,5 +105,3 @@ function classificarCompatibilidade(compatibilidade) {
     return "Baixa";
   }
 }
-
-console.log(classificarCompatibilidade(49));
