@@ -24,6 +24,13 @@ class Vaga {
   }
 }
 
+class VagaRemota extends Vaga {
+  constructor(titulo, empresa, habilidades) {
+    super(titulo, empresa, habilidades);
+    this.modalidade = "Remota";
+  }
+}
+
 const vagas = [
   new Vaga("Desenvolvedor Front-end Júnior", "Fast Site", [
     "HTML",
@@ -32,7 +39,7 @@ const vagas = [
     "Git",
   ]),
 
-  new Vaga("Desenvolvedor Front-end React", "Tec Soluções", [
+  new VagaRemota("Desenvolvedor Front-end React", "Tec Soluções", [
     "HTML",
     "CSS",
     "JavaScript",
@@ -72,12 +79,14 @@ for (const vaga of vagas) {
   resultadosVagas.push({
     titulo: vaga.titulo,
     empresa: vaga.empresa,
+    modalidade: vaga.modalidade || "Não informada",
     faltantes: resultado.faltantes,
     compatibilidade: compatibilidade,
     classificacao: classificacao,
   });
 
   console.log(vaga.titulo);
+  console.log("Modalidade:", vaga.modalidade || "Não informada");
   console.log("Classificação:", classificacao);
   console.log("Habilidades atendidas:", resultado.atendidas);
   console.log("Habilidades faltantes:", resultado.faltantes);
