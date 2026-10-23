@@ -1,21 +1,53 @@
+class Vaga {
+  constructor(titulo, empresa, habilidades) {
+    this.titulo = titulo;
+    this.empresa = empresa;
+    this.habilidades = habilidades;
+  }
+
+  compararHabilidades(habilidadesCandidatos) {
+    const habilidadesAtendidas = [];
+    const habilidadesFaltantes = [];
+
+    for (const habilidade of this.habilidades) {
+      if (habilidadesCandidatos.includes(habilidade)) {
+        habilidadesAtendidas.push(habilidade);
+      } else {
+        habilidadesFaltantes.push(habilidade);
+      }
+    }
+
+    return {
+      atendidas: habilidadesAtendidas,
+      faltantes: habilidadesFaltantes,
+    };
+  }
+}
+
 const vagas = [
-  {
-    titulo: "Desenvolvedor Front-end Júnior",
-    empresa: "Fast Site",
-    habilidades: ["HTML", "CSS", "JavaScript", "Git"],
-  },
+  new Vaga("Desenvolvedor Front-end Júnior", "Fast Site", [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Git",
+  ]),
 
-  {
-    titulo: "Desenvolvedor Front-end React",
-    empresa: "Tec Soluções",
-    habilidades: ["HTML", "CSS", "JavaScript", "React", "APIs"],
-  },
+  new Vaga("Desenvolvedor Front-end React", "Tec Soluções", [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "APIs",
+  ]),
 
-  {
-    titulo: "Desenvolvedor Full Stack Júnior",
-    empresa: "Sistema Fácil",
-    habilidades: ["HTML", "CSS", "JavaScript", "Git", "Node.js", "APIs REST"],
-  },
+  new Vaga("Desenvolvedor Full Stack Júnior", "Sistema Fácil", [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Git",
+    "Node.js",
+    "APIs REST",
+  ]),
 ];
 
 const candidatos = [
@@ -27,31 +59,10 @@ const candidatos = [
   },
 ];
 
-function compararHabilidades(habilidadesCandidatos, habilidadesVagas) {
-  const habilidadesAtendidas = [];
-  const habilidadesFaltantes = [];
-
-  for (const habilidade of habilidadesVagas) {
-    if (habilidadesCandidatos.includes(habilidade)) {
-      habilidadesAtendidas.push(habilidade);
-    } else {
-      habilidadesFaltantes.push(habilidade);
-    }
-  }
-
-  return {
-    atendidas: habilidadesAtendidas,
-    faltantes: habilidadesFaltantes,
-  };
-}
-
 const resultadosVagas = [];
 
 for (const vaga of vagas) {
-  const resultado = compararHabilidades(
-    candidatos[0].habilidades,
-    vaga.habilidades,
-  );
+  const resultado = vaga.compararHabilidades(candidatos[0].habilidades);
 
   const compatibilidade =
     (resultado.atendidas.length / vaga.habilidades.length) * 100;
