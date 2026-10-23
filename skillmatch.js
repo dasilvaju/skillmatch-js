@@ -51,7 +51,23 @@ for (const vaga of vagas) {
     vaga.habilidades,
   );
 
+  const compatibilidade =
+  (resultado.atendidas.length / vaga.habilidades.length) * 100;
+
+  let classificacao;
+
+  if (compatibilidade >= 80) {
+    classificacao ="Alta";
+  } else if (compatibilidade >=50) {
+    classificacao = "Média";
+  } else {
+    classificacao = "Baixa"
+  }
+
   console.log(vaga.titulo);
-  console.log(resultado.atendidas);
-  console.log(resultado.faltantes);
+  console.log("Classificação:", classificacao);
+  console.log("Habilidades atendidas:", resultado.atendidas);
+  console.log("Habilidades faltantes:", resultado.faltantes);
+  console.log("Compatibilidade:", compatibilidade.toFixed(2) + "%");
+  console.log("--------------------");
 }
