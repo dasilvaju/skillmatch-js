@@ -78,74 +78,87 @@ const candidatos = [
   },
 ];
 
+function criarContadorAnalises() {
+  let total = 0;
+
+  return function (callback) {
+    total++;
+    callback(total);
+  };
+}
+
+const registrarAnalise = criarContadorAnalises();
+
 async function iniciarPrograma() {
   try {
     const vagasCarregadas = await carregarVagas();
 
     console.log("Vagas carregadas com sucesso!");
 
-const resultadosVagas = [];
+    const resultadosVagas = [];
 
-for (const vaga of vagasCarregadas) {
-  const resultado = vaga.compararHabilidades(candidatos[0].habilidades);
+    for (const vaga of vagasCarregadas) {
+      registrarAnalise((total) => {
+        console.log("Vagas analisadas até agora:", total);
+      });
 
-  const compatibilidade =
-    (resultado.atendidas.length / vaga.habilidades.length) * 100;
+      const resultado = vaga.compararHabilidades(candidatos[0].habilidades);
 
-  const classificacao = classificarCompatibilidade(compatibilidade);
+      const compatibilidade = (resultado.atendidas.length / vaga.habilidades.length) * 100;
 
-  resultadosVagas.push({
-    titulo: vaga.titulo,
-    empresa: vaga.empresa,
-    modalidade: vaga.modalidade || "Não informada",
-    faltantes: resultado.faltantes,
-    compatibilidade: compatibilidade,
-    classificacao: classificacao,
-  });
+      const classificacao = classificarCompatibilidade(compatibilidade);
 
-  console.log(vaga.titulo);
-  console.log("Modalidade:", vaga.modalidade || "Não informada");
-  console.log("Classificação:", classificacao);
-  console.log("Habilidades atendidas:", resultado.atendidas);
-  console.log("Habilidades faltantes:", resultado.faltantes);
-  console.log("Compatibilidade:", compatibilidade.toFixed(2) + "%");
-  console.log("--------------------");
-}
+      resultadosVagas.push({
+        titulo: vaga.titulo,
+        empresa: vaga.empresa,
+        modalidade: vaga.modalidade || "Não informada",
+        faltantes: resultado.faltantes,
+        compatibilidade: compatibilidade,
+        classificacao: classificacao,
+      });
 
-const vagasAltaCompatibilidade = resultadosVagas.filter((vaga) => {
-  return vaga.compatibilidade >= 80;
-});
+      console.log(vaga.titulo);
+      console.log("Modalidade:", vaga.modalidade || "Não informada");
+      console.log("Classificação:", classificacao);
+      console.log("Habilidades atendidas:", resultado.atendidas);
+      console.log("Habilidades faltantes:", resultado.faltantes);
+      console.log("Compatibilidade:", compatibilidade.toFixed(2) + "%");
+      console.log("--------------------");
+    }
 
-console.log("Vagas com alta compatibilidade:", vagasAltaCompatibilidade);
+    const vagasAltaCompatibilidade = resultadosVagas.filter((vaga) => {
+      return vaga.compatibilidade >= 80;
+    });
 
-const titulosVagas = resultadosVagas.map((vaga) => {
-  return vaga.titulo;
-});
+    console.log("Vagas com alta compatibilidade:", vagasAltaCompatibilidade);
 
-console.log("Vagas analisadas:", titulosVagas);
+    const titulosVagas = resultadosVagas.map((vaga) => {
+      return vaga.titulo;
+    });
 
-console.log(resultadosVagas);
+    console.log("Vagas analisadas:", titulosVagas);
 
-const melhorVaga = resultadosVagas.reduce((acumulador, atual) => {
-  if (
-    atual.compatibilidade > acumulador.compatibilidade ||
-    (atual.compatibilidade === acumulador.compatibilidade &&
-      atual.faltantes.length < acumulador.faltantes.length)
-  ) {
-    return atual;
-  } else {
-    return acumulador;
-  }
-});
+    console.log(resultadosVagas);
 
-console.log("Vaga prioritária para estudo:", melhorVaga.titulo);
-console.log("Habilidades faltantes:", melhorVaga.faltantes);
-console.log("Recomendações de estudo:");
+    const melhorVaga = resultadosVagas.reduce((acumulador, atual) => {
+      if (
+        atual.compatibilidade > acumulador.compatibilidade ||
+        (atual.compatibilidade === acumulador.compatibilidade &&
+          atual.faltantes.length < acumulador.faltantes.length)
+      ) {
+        return atual;
+      } else {
+        return acumulador;
+      }
+    });
 
-for (const habilidade of melhorVaga.faltantes) {
-  console.log("Estudar:", habilidade);
-}
+    console.log("Vaga prioritária para estudo:", melhorVaga.titulo);
+    console.log("Habilidades faltantes:", melhorVaga.faltantes);
+    console.log("Recomendações de estudo:");
 
+    for (const habilidade of melhorVaga.faltantes) {
+      console.log("Estudar:", habilidade);
+    }
   } catch (erro) {
     console.error("Erro ao carregar as vagas:", erro.message);
   }
