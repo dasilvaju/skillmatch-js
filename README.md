@@ -42,7 +42,7 @@ Para cada vaga, o sistema identifica as habilidades atendidas e as habilidades f
 - Git e GitHub
 
 
-###Como executar o projeto
+### Como executar o projeto
 
 1. Instale o Node.js.
 2. Clone o repositório do projeto.
