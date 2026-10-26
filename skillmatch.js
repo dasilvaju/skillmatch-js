@@ -60,6 +60,7 @@ const candidatos = [
     areaInteresse: "Front-end",
     habilidades: ["JavaScript", "Git", "GitHub"],
     experiencia: 0,
+    disponivelParaRemoto: true,
   },
 ];
 
@@ -137,6 +138,14 @@ async function iniciarPrograma() {
     const vagasCarregadas = await carregarVagas();
 
     console.log("Vagas carregadas com sucesso!");
+
+    console.log("\nPerfil da candidata:");
+    console.log("Nome:", candidatos[0].nome);
+    console.log("Área de interesse:", candidatos[0].areaInteresse);
+    console.log(
+      "Disponibilidade para trabalho remoto:",
+      candidatos[0].disponivelParaRemoto,
+    );
 
     const resultadosVagas = [];
 

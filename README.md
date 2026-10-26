@@ -97,3 +97,22 @@ Criar uma interface gráfica para facilitar o uso.
 ### Contexto de execução
 
 O projeto executa localmente com Node.js e apresenta os resultados no terminal. O carregamento assíncrono simula uma operação de espera, mas ainda não realiza comunicação real entre cliente e servidor.
+
+
+### Como a internet funciona
+
+A internet conecta dispositivos e servidores por meio de redes que utilizam protocolos de comunicação. Quando um usuário acessa um site, o navegador envia uma solicitação a um servidor, que processa o pedido e retorna uma resposta. O navegador utiliza essa resposta para apresentar o conteúdo ao usuário.
+
+
+### Arquitetura cliente-servidor
+
+Na arquitetura cliente-servidor, o cliente solicita informações ou serviços, enquanto o servidor recebe e processa as solicitações e retorna respostas. No SkillMatch JS, o carregamento assíncrono com Promise, setTimeout() e async/await simula uma espera por dados, mas não existe comunicação real com um servidor ou API externa.
+
+### Extensões do VS Code
+
+Extensões recomendadas para trabalhar com JavaScript:
+
+**ESLint:** identifica possíveis problemas no código e ajuda a manter padrões de qualidade.
+**Prettier - Code formatter:** formata o código automaticamente para manter uma apresentação consistente.
+
+Essas extensões são recomendações para o ambiente de desenvolvimento e não são dependências necessárias para executar o projeto.
